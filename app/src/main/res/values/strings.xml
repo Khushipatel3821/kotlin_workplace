@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FitPulse</string>
+    <string name="notification_channel_workout">Active Workout Tracker</string>
+    <string name="notification_channel_workout_desc">Displays real-time workout stats, rest timers, and exercise updates.</string>
+</resources>
