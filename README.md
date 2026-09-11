@@ -1,13 +1,13 @@
 # FitPulse ⚡
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Kotlin-2.0.20-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
-  <img src="https://img.shields.io/badge/Android%20SDK-35%20(15.0)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android SDK" />
-  <img src="https://img.shields.io/badge/Jetpack%20Compose-2024.08.00-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white" alt="Compose" />
-  <img src="https://img.shields.io/badge/Material%203-Obsidian%20Neon-C6FF00?style=for-the-badge" alt="Material 3" />
-  <img src="https://img.shields.io/badge/Dagger%20Hilt-2.51.1-black?style=for-the-badge&logo=dagger&logoColor=white" alt="Hilt" />
-  <img src="https://img.shields.io/badge/Architecture-Clean%20%2B%20MVI%2FMVVM-blueviolet?style=for-the-badge" alt="Architecture" />
-  <img src="https://img.shields.io/badge/Privacy-100%25%20Offline--First-00E5FF?style=for-the-badge" alt="Offline-First" />
+  <img src="docs/badges/kotlin.svg" alt="Kotlin" />
+  <img src="docs/badges/android_sdk.svg" alt="Android SDK" />
+  <img src="docs/badges/compose.svg" alt="Compose" />
+  <img src="docs/badges/material3.svg" alt="Material 3" />
+  <img src="docs/badges/hilt.svg" alt="Hilt" />
+  <img src="docs/badges/architecture.svg" alt="Architecture" />
+  <img src="docs/badges/privacy.svg" alt="Offline-First" />
 </p>
 
 <p align="center">
@@ -122,14 +122,12 @@ graph TD
 
 FitPulse employs an **Obsidian Athletic Neon** aesthetic tailored for high contrast, low ocular strain in gym environments, and deep mindfulness focus.
 
-<p align="center">
-  <img src="https://via.placeholder.com/15/C6FF00/000000?text=+" alt="Neon Lime" /> <code>#C6FF00</code> <strong>Neon Lime</strong>: Primary energy, active buttons, completed sets, peak reps<br/>
-  <img src="https://via.placeholder.com/15/00E5FF/000000?text=+" alt="Electric Cyan" /> <code>#00E5FF</code> <strong>Electric Cyan</strong>: Sensors, breathing inhalations, hydration metrics<br/>
-  <img src="https://via.placeholder.com/15/FF6D00/000000?text=+" alt="Cyber Orange" /> <code>#FF6D00</code> <strong>Cyber Orange</strong>: Caloric burn, active streaks, rest alerts<br/>
-  <img src="https://via.placeholder.com/15/FF1744/000000?text=+" alt="Pulse Red" /> <code>#FF1744</code> <strong>Pulse Red</strong>: Incomplete form warnings, cancellation actions<br/>
-  <img src="https://via.placeholder.com/15/121214/FFFFFF?text=+" alt="Obsidian Black" /> <code>#121214</code> <strong>Obsidian Black</strong>: Deep OLED dark background<br/>
-  <img src="https://via.placeholder.com/15/1A1A1E/FFFFFF?text=+" alt="Surface Dark" /> <code>#1A1A1E</code> <strong>Surface Dark</strong>: Card and container backgrounds
-</p>
+- 🟩 ` #C6FF00 ` **Neon Lime**: Primary energy, active buttons, completed sets, peak reps
+- 🟦 ` #00E5FF ` **Electric Cyan**: Sensors, breathing inhalations, hydration metrics
+- 🟧 ` #FF6D00 ` **Cyber Orange**: Caloric burn, active streaks, rest alerts
+- 🟥 ` #FF1744 ` **Pulse Red**: Incomplete form warnings, cancellation actions
+- ⬛ ` #121214 ` **Obsidian Black**: Deep OLED dark background
+- 🔳 ` #1A1A1E ` **Surface Dark**: Card and container backgrounds
 
 ---
 
