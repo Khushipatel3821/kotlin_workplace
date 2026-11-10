@@ -38,6 +38,9 @@ import com.fitpulse.app.presentation.dashboard.DashboardViewModel
 import com.fitpulse.app.presentation.gym.ActiveWorkoutScreen
 import com.fitpulse.app.presentation.gym.ActiveWorkoutViewModel
 import com.fitpulse.app.presentation.gym.GymTrackerScreen
+import com.fitpulse.app.presentation.gym.GymTrackerViewModel
+import com.fitpulse.app.presentation.gym.RoutineDetailScreen
+import com.fitpulse.app.presentation.gym.RoutineDetailViewModel
 import com.fitpulse.app.presentation.settings.SettingsScreen
 import com.fitpulse.app.presentation.settings.SettingsViewModel
 import com.fitpulse.app.presentation.theme.NeonLime
@@ -132,18 +135,39 @@ fun FitPulseNavHost(
 
             // Gym Tracker
             composable(Screen.Gym.route) {
-                val dashboardViewModel: DashboardViewModel = hiltViewModel()
-                val activeWorkoutViewModel: ActiveWorkoutViewModel = hiltViewModel()
-                val activeState by activeWorkoutViewModel.uiState.collectAsStateWithLifecycle()
+                val gymViewModel: GymTrackerViewModel = hiltViewModel()
+                val gymState by gymViewModel.uiState.collectAsStateWithLifecycle()
 
                 GymTrackerScreen(
-                    exercises = activeState.availableExercises,
-                    routines = emptyList(),
+                    exercises = gymState.exercises,
+                    routines = gymState.routines,
                     onStartRoutine = { routineId, title ->
                         navController.navigate(Screen.ActiveWorkout.createRoute(routineId, title))
                     },
+                    onOpenRoutineDetail = { routineId ->
+                        navController.navigate(Screen.RoutineDetail.createRoute(routineId))
+                    },
                     onStartEmptyWorkout = {
                         navController.navigate(Screen.ActiveWorkout.createRoute(null, "Quick Workout"))
+                    }
+                )
+            }
+
+            // Routine Detail
+            composable(
+                route = Screen.RoutineDetail.route,
+                arguments = listOf(
+                    navArgument("routineId") { type = NavType.LongType; defaultValue = 1L }
+                )
+            ) {
+                val viewModel: RoutineDetailViewModel = hiltViewModel()
+                RoutineDetailScreen(
+                    viewModel = viewModel,
+                    onBackClick = {
+                        navController.popBackStack()
+                    },
+                    onStartRoutine = { routineId, title ->
+                        navController.navigate(Screen.ActiveWorkout.createRoute(routineId, title))
                     }
                 )
             }

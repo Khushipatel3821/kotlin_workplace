@@ -85,4 +85,18 @@ data class WorkoutRoutine(
     val estimatedDurationMinutes: Int = 45,
     val exercises: List<Exercise> = emptyList(),
     val createdAtTimestamp: Long = System.currentTimeMillis()
-)
+) {
+    val benefits: List<String>
+        get() {
+            val musclesStr = targetMuscles.joinToString(", ") { muscle ->
+                muscle.name.lowercase().replaceFirstChar { char -> char.uppercase() }
+            }
+            return listOf(
+                "Progressive Overload & Mechanical Tension Optimization",
+                "Targeted Muscle Activation: $musclesStr",
+                "Enhanced Neuromuscular Motor Unit Recruitment",
+                "Metabolic Rate & Caloric Expenditure Acceleration",
+                "Optimal Joint Stability & Functional Hypertrophy"
+            )
+        }
+}

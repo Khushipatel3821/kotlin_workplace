@@ -8,6 +8,11 @@ sealed class Screen(val route: String) {
             return "active_workout/${routineId ?: -1L}/$title"
         }
     }
+    data object RoutineDetail : Screen("routine_detail/{routineId}") {
+        fun createRoute(routineId: Long): String {
+            return "routine_detail/$routineId"
+        }
+    }
     data object Yoga : Screen("yoga")
     data object Analytics : Screen("analytics")
     data object Settings : Screen("settings")

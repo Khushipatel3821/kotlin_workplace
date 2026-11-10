@@ -195,11 +195,7 @@ class WorkoutForegroundService : Service() {
                 action = ACTION_START
                 putExtra(EXTRA_WORKOUT_TITLE, title)
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(intent)
-            } else {
-                context.startService(intent)
-            }
+            context.startForegroundService(intent)
         }
 
         fun startRest(context: Context, durationSeconds: Int) {
