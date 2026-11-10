@@ -13,7 +13,7 @@ data class WorkoutRoutineEntity(
     val description: String,
     val targetMuscles: List<MuscleGroup>,
     val estimatedDurationMinutes: Int,
-    val createdAtTimestamp: Long
+    val createdAtTimestamp: Long = System.currentTimeMillis()
 )
 
 @Entity(

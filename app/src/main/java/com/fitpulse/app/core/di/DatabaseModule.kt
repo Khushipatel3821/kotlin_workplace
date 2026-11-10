@@ -39,7 +39,12 @@ object DatabaseModule {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 CoroutineScope(Dispatchers.IO).launch {
-                    databaseProvider.get().workoutDao().insertExercises(FitPulseDatabase.INITIAL_EXERCISES)
+                    val workoutDao = databaseProvider.get().workoutDao()
+                    workoutDao.insertExercises(FitPulseDatabase.INITIAL_EXERCISES)
+                    FitPulseDatabase.INITIAL_ROUTINES.forEach { routine ->
+                        workoutDao.insertRoutine(routine)
+                    }
+                    workoutDao.insertRoutineCrossRefs(FitPulseDatabase.INITIAL_ROUTINE_CROSS_REFS)
                 }
             }
         }).fallbackToDestructiveMigration()

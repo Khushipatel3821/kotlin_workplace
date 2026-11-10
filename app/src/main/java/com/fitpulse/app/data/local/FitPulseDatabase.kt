@@ -141,5 +141,57 @@ abstract class FitPulseDatabase : RoomDatabase() {
                 isCustom = false
             )
         )
+
+        val INITIAL_ROUTINES = listOf(
+            WorkoutRoutineEntity(
+                id = 1,
+                name = "Push Power Hypertrophy",
+                description = "Target chest, shoulders & triceps strength with progressive overload.",
+                targetMuscles = listOf(MuscleGroup.CHEST, MuscleGroup.SHOULDERS, MuscleGroup.TRICEPS),
+                estimatedDurationMinutes = 45
+            ),
+            WorkoutRoutineEntity(
+                id = 2,
+                name = "Pull & Back Sculpt",
+                description = "Build back thickness, lat width, and bicep isolation.",
+                targetMuscles = listOf(MuscleGroup.BACK, MuscleGroup.BICEPS),
+                estimatedDurationMinutes = 50
+            ),
+            WorkoutRoutineEntity(
+                id = 3,
+                name = "Legs & Core Dynamic",
+                description = "Quad dominance, hamstring stretch and core stability overload.",
+                targetMuscles = listOf(MuscleGroup.LEGS, MuscleGroup.CORE),
+                estimatedDurationMinutes = 55
+            ),
+            WorkoutRoutineEntity(
+                id = 4,
+                name = "Full Body Strength Peak",
+                description = "Total body compound movements for maximal power output.",
+                targetMuscles = listOf(MuscleGroup.FULL_BODY, MuscleGroup.CHEST, MuscleGroup.LEGS),
+                estimatedDurationMinutes = 60
+            )
+        )
+
+        val INITIAL_ROUTINE_CROSS_REFS = listOf(
+            // Push Routine (id 1)
+            RoutineExerciseCrossRef(routineId = 1, exerciseId = 1, orderIndex = 0),
+            RoutineExerciseCrossRef(routineId = 1, exerciseId = 6, orderIndex = 1),
+            RoutineExerciseCrossRef(routineId = 1, exerciseId = 4, orderIndex = 2),
+            RoutineExerciseCrossRef(routineId = 1, exerciseId = 9, orderIndex = 3),
+            // Pull Routine (id 2)
+            RoutineExerciseCrossRef(routineId = 2, exerciseId = 3, orderIndex = 0),
+            RoutineExerciseCrossRef(routineId = 2, exerciseId = 7, orderIndex = 1),
+            RoutineExerciseCrossRef(routineId = 2, exerciseId = 5, orderIndex = 2),
+            RoutineExerciseCrossRef(routineId = 2, exerciseId = 8, orderIndex = 3),
+            // Legs Routine (id 3)
+            RoutineExerciseCrossRef(routineId = 3, exerciseId = 2, orderIndex = 0),
+            RoutineExerciseCrossRef(routineId = 3, exerciseId = 10, orderIndex = 1),
+            // Full Body Routine (id 4)
+            RoutineExerciseCrossRef(routineId = 4, exerciseId = 2, orderIndex = 0),
+            RoutineExerciseCrossRef(routineId = 4, exerciseId = 1, orderIndex = 1),
+            RoutineExerciseCrossRef(routineId = 4, exerciseId = 7, orderIndex = 2),
+            RoutineExerciseCrossRef(routineId = 4, exerciseId = 4, orderIndex = 3)
+        )
     }
 }

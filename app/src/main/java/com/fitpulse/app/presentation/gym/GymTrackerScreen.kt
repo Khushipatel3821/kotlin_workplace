@@ -54,6 +54,7 @@ fun GymTrackerScreen(
     exercises: List<Exercise>,
     routines: List<WorkoutRoutine>,
     onStartRoutine: (routineId: Long, title: String) -> Unit,
+    onOpenRoutineDetail: (routineId: Long) -> Unit,
     onStartEmptyWorkout: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -116,7 +117,11 @@ fun GymTrackerScreen(
         }
 
         items(routines) { routine ->
-            RoutineCardItem(routine = routine, onStart = { onStartRoutine(routine.id, routine.name) })
+            RoutineCardItem(
+                routine = routine,
+                onCardClick = { onOpenRoutineDetail(routine.id) },
+                onStart = { onStartRoutine(routine.id, routine.name) }
+            )
         }
 
         // 3. Exercise Catalog with Muscle Group Filter
@@ -167,9 +172,15 @@ fun GymTrackerScreen(
 }
 
 @Composable
-fun RoutineCardItem(routine: WorkoutRoutine, onStart: () -> Unit) {
+fun RoutineCardItem(
+    routine: WorkoutRoutine,
+    onCardClick: () -> Unit,
+    onStart: () -> Unit
+) {
     FitPulseCard(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth(),
+        onClick = onCardClick,
         backgroundColor = MaterialTheme.colorScheme.surface
     ) {
         Row(
@@ -205,6 +216,8 @@ fun RoutineCardItem(routine: WorkoutRoutine, onStart: () -> Unit) {
                     )
                 }
             }
+
+            Spacer(modifier = Modifier.width(8.dp))
 
             Button(
                 onClick = onStart,

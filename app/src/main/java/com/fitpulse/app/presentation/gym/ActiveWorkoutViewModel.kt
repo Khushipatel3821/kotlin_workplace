@@ -9,7 +9,6 @@ import com.fitpulse.app.data.service.WorkoutForegroundService
 import com.fitpulse.app.domain.model.Exercise
 import com.fitpulse.app.domain.model.MotionTrackingState
 import com.fitpulse.app.domain.model.SetType
-import com.fitpulse.app.domain.model.WorkoutSession
 import com.fitpulse.app.domain.model.WorkoutSet
 import com.fitpulse.app.domain.repository.DailyMetricRepository
 import com.fitpulse.app.domain.repository.WorkoutRepository
@@ -18,13 +17,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
