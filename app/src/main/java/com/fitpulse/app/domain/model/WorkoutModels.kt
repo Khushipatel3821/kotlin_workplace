@@ -42,7 +42,31 @@ data class Exercise(
     val instructions: String = "",
     val defaultRestSeconds: Int = 90,
     val isCustom: Boolean = false
-)
+) {
+    val metValue: Float
+        get() = when (category) {
+            ExerciseCategory.BARBELL -> 6.0f
+            ExerciseCategory.DUMBBELL -> 5.5f
+            ExerciseCategory.BODYWEIGHT -> 6.5f
+            ExerciseCategory.CABLE -> 4.8f
+            ExerciseCategory.MACHINE -> 5.0f
+            ExerciseCategory.CARDIO -> 8.5f
+        }
+
+    val benefits: List<String>
+        get() {
+            val primaryStr = primaryMuscle.name.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+            val secondaryStr = if (secondaryMuscles.isNotEmpty()) {
+                " & " + secondaryMuscles.joinToString(", ") { m -> m.name.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() } }
+            } else ""
+            return listOf(
+                "Targeted Muscle Activation: Focuses on $primaryStr$secondaryStr",
+                "Progressive Overload Efficiency: Ideal for systematic mechanical tension & hypertrophy",
+                "Neuromuscular Adaptation: Strengthens motor unit recruitment and joint stability",
+                "Metabolic Burn: High intensity caloric expenditure per sequence set"
+            )
+        }
+}
 
 @Serializable
 data class WorkoutSet(
