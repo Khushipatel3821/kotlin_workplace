@@ -18,7 +18,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.Button
@@ -27,8 +26,6 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,7 +38,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fitpulse.app.domain.model.Exercise
 import com.fitpulse.app.domain.model.MuscleGroup
 import com.fitpulse.app.domain.model.WorkoutRoutine
@@ -55,6 +51,7 @@ fun GymTrackerScreen(
     routines: List<WorkoutRoutine>,
     onStartRoutine: (routineId: Long, title: String) -> Unit,
     onOpenRoutineDetail: (routineId: Long) -> Unit,
+    onOpenExerciseDetail: (exerciseId: Long) -> Unit,
     onStartEmptyWorkout: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -150,7 +147,7 @@ fun GymTrackerScreen(
                             )
                         )
                     }
-                    items(MuscleGroup.values()) { muscle ->
+                    items(MuscleGroup.entries) { muscle ->
                         FilterChip(
                             selected = selectedMuscleFilter == muscle,
                             onClick = { selectedMuscleFilter = muscle },
@@ -166,7 +163,10 @@ fun GymTrackerScreen(
         }
 
         items(filteredExercises) { exercise ->
-            ExerciseCatalogItem(exercise = exercise)
+            ExerciseCatalogItem(
+                exercise = exercise,
+                onCardClick = { onOpenExerciseDetail(exercise.id) }
+            )
         }
     }
 }
@@ -233,9 +233,13 @@ fun RoutineCardItem(
 }
 
 @Composable
-fun ExerciseCatalogItem(exercise: Exercise) {
+fun ExerciseCatalogItem(
+    exercise: Exercise,
+    onCardClick: () -> Unit
+) {
     FitPulseCard(
         modifier = Modifier.fillMaxWidth(),
+        onClick = onCardClick,
         backgroundColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f)
     ) {
         Row(
