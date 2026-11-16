@@ -37,6 +37,8 @@ import com.fitpulse.app.presentation.dashboard.DashboardScreen
 import com.fitpulse.app.presentation.dashboard.DashboardViewModel
 import com.fitpulse.app.presentation.gym.ActiveWorkoutScreen
 import com.fitpulse.app.presentation.gym.ActiveWorkoutViewModel
+import com.fitpulse.app.presentation.gym.ExerciseDetailScreen
+import com.fitpulse.app.presentation.gym.ExerciseDetailViewModel
 import com.fitpulse.app.presentation.gym.GymTrackerScreen
 import com.fitpulse.app.presentation.gym.GymTrackerViewModel
 import com.fitpulse.app.presentation.gym.RoutineDetailScreen
@@ -147,6 +149,9 @@ fun FitPulseNavHost(
                     onOpenRoutineDetail = { routineId ->
                         navController.navigate(Screen.RoutineDetail.createRoute(routineId))
                     },
+                    onOpenExerciseDetail = { exerciseId ->
+                        navController.navigate(Screen.ExerciseDetail.createRoute(exerciseId))
+                    },
                     onStartEmptyWorkout = {
                         navController.navigate(Screen.ActiveWorkout.createRoute(null, "Quick Workout"))
                     }
@@ -168,6 +173,25 @@ fun FitPulseNavHost(
                     },
                     onStartRoutine = { routineId, title ->
                         navController.navigate(Screen.ActiveWorkout.createRoute(routineId, title))
+                    }
+                )
+            }
+
+            // Exercise Detail
+            composable(
+                route = Screen.ExerciseDetail.route,
+                arguments = listOf(
+                    navArgument("exerciseId") { type = NavType.LongType; defaultValue = 1L }
+                )
+            ) {
+                val viewModel: ExerciseDetailViewModel = hiltViewModel()
+                ExerciseDetailScreen(
+                    viewModel = viewModel,
+                    onBackClick = {
+                        navController.popBackStack()
+                    },
+                    onStartWorkoutWithExercise = { exerciseName ->
+                        navController.navigate(Screen.ActiveWorkout.createRoute(null, exerciseName))
                     }
                 )
             }
