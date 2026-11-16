@@ -91,30 +91,27 @@ class RoutineDetailViewModel @Inject constructor(
         val reps = currentState.repsCount
         val rpe = currentState.rpeIntensity
 
-        // Extensible Formula:
-        // Volume Factor = (sets * reps * weight) / 1000.0
-        // MET Base Rates: Barbell=6.0, Dumbbell=5.5, Bodyweight=6.5, Cable=4.8, Machine=5.0
-        val volumeFactor = (sets * reps * weight) / 1000f
-        val rpeMultiplier = (rpe / 7.0f).coerceIn(0.7f, 1.4f)
-        val baseMetAvg = 5.8f
-
-        // Calories per sequence calculation (~22.5 kcal target sequence)
-        val calPerSequence = (baseMetAvg * 3.5f * (weight / 200f) * volumeFactor * rpeMultiplier * 8.5f).coerceAtLeast(10f)
+        val calPerSequence = estimateCaloricBurnUseCase.forSequence(
+            category = ExerciseCategory.BARBELL,
+            weightKg = weight,
+            sets = sets,
+            reps = reps,
+            rpe = rpe
+        )
 
         val breakdowns = routine.exercises.map { exercise ->
-            val met = when (exercise.category) {
-                ExerciseCategory.BARBELL -> 6.0f
-                ExerciseCategory.DUMBBELL -> 5.5f
-                ExerciseCategory.BODYWEIGHT -> 6.5f
-                ExerciseCategory.CABLE -> 4.8f
-                ExerciseCategory.MACHINE -> 5.0f
-                ExerciseCategory.CARDIO -> 8.5f
-            }
-            val exCalories = (calPerSequence * (met / baseMetAvg)).toInt()
+            val exCalories = estimateCaloricBurnUseCase.forSequence(
+                category = exercise.category,
+                weightKg = weight,
+                sets = sets,
+                reps = reps,
+                rpe = rpe
+            ).toInt()
+
             ExerciseCalorieBreakdown(
                 exerciseName = exercise.name,
                 categoryName = exercise.category.name,
-                baseMet = met,
+                baseMet = exercise.metValue,
                 estimatedCalories = exCalories
             )
         }

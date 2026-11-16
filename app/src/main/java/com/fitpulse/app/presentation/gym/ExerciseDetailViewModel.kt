@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fitpulse.app.domain.model.Exercise
 import com.fitpulse.app.domain.repository.WorkoutRepository
+import com.fitpulse.app.domain.usecase.EstimateCaloricBurnUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,7 +36,8 @@ data class ExerciseDetailUiState(
 @HiltViewModel
 class ExerciseDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val workoutRepository: WorkoutRepository
+    private val workoutRepository: WorkoutRepository,
+    private val estimateCaloricBurnUseCase: EstimateCaloricBurnUseCase
 ) : ViewModel() {
 
     val exerciseId: Long = savedStateHandle.get<Long>("exerciseId") ?: 1L
@@ -98,16 +100,14 @@ class ExerciseDetailViewModel @Inject constructor(
         val reps = currentState.repsCount
         val rpe = currentState.rpeIntensity
 
-        val effectiveWeight = if (exercise.category == com.fitpulse.app.domain.model.ExerciseCategory.BODYWEIGHT) {
-            75.0f // Average body weight for bodyweight exercise calculation
-        } else weight
-
-        val met = exercise.metValue
-        val volumeFactor = (sets * reps * effectiveWeight) / 1000f
-        val rpeMultiplier = (rpe / 7.0f).coerceIn(0.7f, 1.4f)
-
-        // Estimated calories for sequence (e.g., ~22.0 kcal for 4 sets of 12 reps @ 15kg)
-        val calPerSequence = (met * 3.5f * (effectiveWeight / 200f) * volumeFactor * rpeMultiplier * 8.5f).coerceAtLeast(8f)
+        // Delegate to EstimateCaloricBurnUseCase (Single Source of Truth)
+        val calPerSequence = estimateCaloricBurnUseCase.forSequence(
+            category = exercise.category,
+            weightKg = weight,
+            sets = sets,
+            reps = reps,
+            rpe = rpe
+        )
 
         val setCalorie = calPerSequence / sets.toFloat()
         val breakdowns = (1..sets).map { setNum ->
