@@ -1,7 +1,6 @@
 package com.fitpulse.app.domain.usecase
 
 import com.fitpulse.app.domain.model.ExerciseCategory
-import com.fitpulse.app.domain.model.WorkoutSet
 
 class EstimateCaloricBurnUseCase {
 
@@ -48,5 +47,29 @@ class EstimateCaloricBurnUseCase {
         // Average caloric cost: ~0.04 - 0.05 kcal per step for a 70-80kg adult
         val kcalPerStep = (weightKg / 75f) * 0.045f
         return (steps * kcalPerStep).toInt()
+    }
+
+    /**
+     * Calculates sequence caloric expenditure based on exercise category MET rate, volume factor, and intensity.
+     */
+    fun forSequence(
+        category: ExerciseCategory,
+        weightKg: Float,
+        sets: Int,
+        reps: Int,
+        rpe: Float = 7.5f
+    ): Float {
+        val effectiveWeight = if (category == ExerciseCategory.BODYWEIGHT) 75.0f else weightKg.coerceAtLeast(0f)
+        val met = when (category) {
+            ExerciseCategory.BARBELL -> 6.0f
+            ExerciseCategory.DUMBBELL -> 5.5f
+            ExerciseCategory.BODYWEIGHT -> 6.5f
+            ExerciseCategory.CABLE -> 4.8f
+            ExerciseCategory.MACHINE -> 5.0f
+            ExerciseCategory.CARDIO -> 8.5f
+        }
+        val volumeFactor = (sets * reps * effectiveWeight) / 1000f
+        val rpeMultiplier = (rpe / 7.0f).coerceIn(0.7f, 1.4f)
+        return (met * 3.5f * (effectiveWeight / 200f) * volumeFactor * rpeMultiplier * 8.5f).coerceAtLeast(8f)
     }
 }
